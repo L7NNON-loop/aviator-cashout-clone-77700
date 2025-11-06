@@ -25,11 +25,11 @@ export const EntrySignal = ({ onOpenBetModal, onOpenAlertModal }: { onOpenBetMod
           if (data?.shouldEnter) {
             const signalCashout = data.cashout.toFixed(2);
             const signalAttempts = data.attempts;
-            const randomCountdown = Math.floor(Math.random() * 3) + 2;
+            const signalCountdown = data.countdown || Math.floor(Math.random() * 3) + 2;
 
             setCashout(`${signalCashout}x`);
             setAttempts(`${signalAttempts}`);
-            setCountdown(randomCountdown);
+            setCountdown(signalCountdown);
             setStatus("CONFIRMAR");
 
             toast.success("Entrada confirmada!", {
