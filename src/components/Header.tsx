@@ -1,6 +1,9 @@
 import { Rocket } from "lucide-react";
+import { useOnlineUsers } from "@/hooks/useOnlineUsers";
 
 export const Header = () => {
+  const onlineCount = useOnlineUsers();
+  
   return (
     <header className="bg-card border-b border-border px-4 py-3">
       <div className="container mx-auto flex items-center justify-between">
@@ -15,7 +18,7 @@ export const Header = () => {
         </div>
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
-          <span className="text-sm font-semibold text-primary">8 online</span>
+          <span className="text-sm font-semibold text-primary">{onlineCount} online</span>
         </div>
       </div>
     </header>

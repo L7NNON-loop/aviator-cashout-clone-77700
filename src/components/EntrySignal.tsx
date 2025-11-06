@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 export const EntrySignal = ({ onOpenBetModal, onOpenAlertModal }: { onOpenBetModal: () => void, onOpenAlertModal: () => void }) => {
   const [countdown, setCountdown] = useState<number | null>(null);
@@ -9,25 +10,51 @@ export const EntrySignal = ({ onOpenBetModal, onOpenAlertModal }: { onOpenBetMod
   const [status, setStatus] = useState("AGUARDE...");
 
   useEffect(() => {
-    const generateSignal = () => {
+    const generateSignal = async () => {
       setStatus("AGUARDE...");
       setCashout("--");
       setAttempts("--");
       setCountdown(null);
 
-      setTimeout(() => {
-        const randomCashout = (Math.random() * 1.5 + 1.5).toFixed(2);
-        const randomAttempts = Math.floor(Math.random() * 2) + 1;
-        const randomCountdown = Math.floor(Math.random() * 3) + 2;
+      setTimeout(async () => {
+        try {
+          const { data, error } = await supabase.functions.invoke('aviator-signals');
+          
+          if (error) throw error;
 
-        setCashout(`${randomCashout}x`);
-        setAttempts(`${randomAttempts}`);
-        setCountdown(randomCountdown);
-        setStatus("CONFIRMAR");
+          if (data?.shouldEnter) {
+            const signalCashout = data.cashout.toFixed(2);
+            const signalAttempts = data.attempts;
+            const randomCountdown = Math.floor(Math.random() * 3) + 2;
 
-        toast.success("Entrada confirmada!", {
-          description: `Tirar no: ${randomCashout}x em ${randomAttempts} tentativas`,
-        });
+            setCashout(`${signalCashout}x`);
+            setAttempts(`${signalAttempts}`);
+            setCountdown(randomCountdown);
+            setStatus("CONFIRMAR");
+
+            toast.success("Entrada confirmada!", {
+              description: `Tirar no: ${signalCashout}x em ${signalAttempts} tentativas`,
+            });
+          } else {
+            // Aguarda próximo sinal
+            setTimeout(generateSignal, 5000);
+          }
+        } catch (error) {
+          console.error('Error generating signal:', error);
+          // Fallback
+          const fallbackCashout = (Math.random() * 1.5 + 1.5).toFixed(2);
+          const fallbackAttempts = Math.floor(Math.random() * 2) + 1;
+          const randomCountdown = Math.floor(Math.random() * 3) + 2;
+
+          setCashout(`${fallbackCashout}x`);
+          setAttempts(`${fallbackAttempts}`);
+          setCountdown(randomCountdown);
+          setStatus("CONFIRMAR");
+
+          toast.success("Entrada confirmada!", {
+            description: `Tirar no: ${fallbackCashout}x em ${fallbackAttempts} tentativas`,
+          });
+        }
       }, 8000);
     };
 

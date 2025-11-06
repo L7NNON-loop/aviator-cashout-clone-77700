@@ -1,24 +1,34 @@
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 export const CandleAnalysis = () => {
   const [candles, setCandles] = useState(["2.30x", "1.89x", "1.45x", "1.07x"]);
   const [isAnalyzing, setIsAnalyzing] = useState(true);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsAnalyzing(true);
-      setTimeout(() => {
-        const newCandles = Array.from({ length: 4 }, () => 
-          `${(Math.random() * 3 + 1).toFixed(2)}x`
+  const fetchHistory = async () => {
+    setIsAnalyzing(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('aviator-history');
+      
+      if (error) throw error;
+      
+      if (data?.history && Array.isArray(data.history)) {
+        const formattedCandles = data.history.slice(0, 4).map((value: number) => 
+          `${value.toFixed(2)}x`
         );
-        setCandles(newCandles);
-        setIsAnalyzing(false);
-      }, 1500);
-    }, 8000);
+        setCandles(formattedCandles);
+      }
+    } catch (error) {
+      console.error('Error fetching history:', error);
+    } finally {
+      setTimeout(() => setIsAnalyzing(false), 1500);
+    }
+  };
 
-    setTimeout(() => setIsAnalyzing(false), 1500);
-
+  useEffect(() => {
+    fetchHistory();
+    const interval = setInterval(fetchHistory, 12000);
     return () => clearInterval(interval);
   }, []);
 

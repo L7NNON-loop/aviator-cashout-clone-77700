@@ -1,0 +1,7 @@
+project_id = "zcnncussrlxtkxaapclk"
+
+[functions.aviator-history]
+verify_jwt = false
+
+[functions.aviator-signals]
+verify_jwt = false
