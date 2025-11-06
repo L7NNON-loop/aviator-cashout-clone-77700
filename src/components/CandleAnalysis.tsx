@@ -36,18 +36,31 @@ export const CandleAnalysis = () => {
     <div className="bg-card border border-border rounded-xl p-4 shadow-lg">
       <div className="flex items-center gap-2 mb-3">
         <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
-        <h2 className="text-sm font-semibold text-foreground">Analisando velas</h2>
-        {isAnalyzing && <Loader2 className="w-4 h-4 animate-spin text-blue-500" />}
+        <h2 className="text-xs font-semibold text-foreground">Analisando velas passadas</h2>
+        {isAnalyzing && <Loader2 className="w-3 h-3 animate-spin text-blue-500" />}
       </div>
       <div className="grid grid-cols-4 gap-2">
-        {candles.map((candle, index) => (
-          <div
-            key={index}
-            className="bg-multiplier-bg border border-multiplier/30 rounded-lg py-3 px-2 text-center transition-all duration-300 hover:border-multiplier/60"
-          >
-            <span className="text-multiplier font-bold text-lg">{candle}</span>
-          </div>
-        ))}
+        {candles.map((candle, index) => {
+          const value = parseFloat(candle.replace('x', ''));
+          let colorClass = '';
+          
+          if (value >= 1.00 && value <= 1.99) {
+            colorClass = 'text-purple-500 border-purple-500 bg-purple-500/10';
+          } else if (value >= 2.00 && value <= 9.99) {
+            colorClass = 'text-purple-600 border-purple-600 bg-purple-600/10';
+          } else if (value >= 10.00) {
+            colorClass = 'text-pink-500 border-pink-500 bg-pink-500/10';
+          }
+          
+          return (
+            <div
+              key={index}
+              className={`rounded-full border-2 py-2 px-1 text-center transition-all duration-300 ${colorClass}`}
+            >
+              <span className="font-bold text-xs">{candle}</span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

@@ -1,22 +1,22 @@
-import { Rocket } from "lucide-react";
+import { Brain } from "lucide-react";
 import { useOnlineUsers } from "@/hooks/useOnlineUsers";
 
 export const Header = () => {
   const onlineCount = useOnlineUsers();
   
   return (
-    <header className="bg-card border-b border-border px-4 py-3">
+    <header className="bg-gradient-to-r from-card via-primary/5 to-card border-b-2 border-primary/30 px-4 py-3 shadow-lg">
       <div className="container mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="bg-primary/10 p-2 rounded-lg">
-            <Rocket className="w-5 h-5 text-primary" />
+        <div className="flex items-center gap-3">
+          <div className="bg-gradient-to-br from-primary/20 to-primary/10 p-2 rounded-xl border border-primary/30">
+            <Brain className="w-5 h-5 text-primary" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-foreground">Sistema Cashout</h1>
-            <p className="text-xs text-muted-foreground">Aguarde entrada</p>
+            <h1 className="text-lg font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">ChatIA Aviator</h1>
+            <p className="text-xs text-muted-foreground">Inteligência Artificial Avançada</p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/30">
           <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
           <span className="text-sm font-semibold text-primary">{onlineCount} online</span>
         </div>
