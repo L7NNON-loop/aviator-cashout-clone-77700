@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Share2 } from "lucide-react";
 
-export const EntrySignal = ({ onOpenBetModal, onOpenAlertModal }: { onOpenBetModal: () => void, onOpenAlertModal: () => void }) => {
+export const EntrySignal = ({ onOpenBetModal }: { onOpenBetModal: () => void }) => {
   const [countdown, setCountdown] = useState<number | null>(null);
   const [cashout, setCashout] = useState("--");
   const [attempts, setAttempts] = useState("--");
@@ -125,20 +125,12 @@ export const EntrySignal = ({ onOpenBetModal, onOpenAlertModal }: { onOpenBetMod
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 mb-3">
-        <Button
-          onClick={onOpenBetModal}
-          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-primary/50"
-        >
-          🎰 Apostar
-        </Button>
-        <Button
-          onClick={onOpenAlertModal}
-          className="w-full bg-warning hover:bg-warning/90 text-warning-foreground font-semibold py-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-warning/50"
-        >
-          🔔 Ativar Alerta
-        </Button>
-      </div>
+      <Button
+        onClick={onOpenBetModal}
+        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-primary/50 mb-3"
+      >
+        🎰 Apostar
+      </Button>
 
       <Button
         onClick={handleShare}

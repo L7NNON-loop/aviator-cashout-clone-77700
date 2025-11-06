@@ -33,11 +33,11 @@ export const CandleAnalysis = () => {
   }, []);
 
   return (
-    <div className="bg-card border border-border rounded-xl p-4 shadow-lg">
+    <div className="bg-card border border-border rounded-lg p-4">
       <div className="flex items-center gap-2 mb-3">
-        <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
-        <h2 className="text-xs font-semibold text-foreground">Analisando velas passadas</h2>
-        {isAnalyzing && <Loader2 className="w-3 h-3 animate-spin text-blue-500" />}
+        <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+        <h2 className="text-sm font-semibold text-foreground">Analisando velas passadas</h2>
+        {isAnalyzing && <Loader2 className="w-3 h-3 animate-spin text-primary" />}
       </div>
       <div className="grid grid-cols-4 gap-2">
         {candles.map((candle, index) => {
@@ -55,7 +55,7 @@ export const CandleAnalysis = () => {
           return (
             <div
               key={index}
-              className={`rounded-full border-2 py-2 px-1 text-center transition-all duration-300 ${colorClass}`}
+              className={`rounded-lg border py-1 px-2 text-center transition-all duration-300 ${colorClass}`}
             >
               <span className="font-bold text-xs">{candle}</span>
             </div>
