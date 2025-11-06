@@ -9,6 +9,7 @@ export const EntrySignal = ({ onOpenBetModal }: { onOpenBetModal: () => void }) 
   const [cashout, setCashout] = useState("--");
   const [attempts, setAttempts] = useState("--");
   const [status, setStatus] = useState("AGUARDE...");
+  const [nextRoundCountdown, setNextRoundCountdown] = useState<number | null>(null);
 
   const playNotificationSound = () => {
     const audio = new Audio('data:audio/wav;base64,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');
@@ -41,6 +42,7 @@ export const EntrySignal = ({ onOpenBetModal }: { onOpenBetModal: () => void }) 
       setCashout("--");
       setAttempts("--");
       setCountdown(null);
+      setNextRoundCountdown(null);
 
       setTimeout(async () => {
         try {
@@ -63,6 +65,11 @@ export const EntrySignal = ({ onOpenBetModal }: { onOpenBetModal: () => void }) 
             toast.success("🎯 Nova entrada confirmada!", {
               description: `Tirar no: ${signalCashout}x em ${signalAttempts} tentativas`,
             });
+
+            // Após 30 segundos, iniciar contagem para próxima rodada
+            setTimeout(() => {
+              setNextRoundCountdown(30);
+            }, 30000);
           } else {
             setTimeout(generateSignal, 5000);
           }
@@ -82,12 +89,17 @@ export const EntrySignal = ({ onOpenBetModal }: { onOpenBetModal: () => void }) 
           toast.success("🎯 Nova entrada confirmada!", {
             description: `Tirar no: ${fallbackCashout}x em ${fallbackAttempts} tentativas`,
           });
+
+          // Após 30 segundos, iniciar contagem para próxima rodada
+          setTimeout(() => {
+            setNextRoundCountdown(30);
+          }, 30000);
         }
       }, 8000);
     };
 
     generateSignal();
-    const interval = setInterval(generateSignal, 30000);
+    const interval = setInterval(generateSignal, 60000);
 
     return () => clearInterval(interval);
   }, []);
@@ -99,6 +111,13 @@ export const EntrySignal = ({ onOpenBetModal }: { onOpenBetModal: () => void }) 
     }
   }, [countdown]);
 
+  useEffect(() => {
+    if (nextRoundCountdown !== null && nextRoundCountdown > 0) {
+      const timer = setTimeout(() => setNextRoundCountdown(nextRoundCountdown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [nextRoundCountdown]);
+
   return (
     <div className="bg-gradient-to-br from-primary/5 to-primary/10 border-2 border-primary/30 rounded-xl p-5 shadow-2xl">
       <div className="flex items-center justify-between mb-4">
@@ -107,6 +126,13 @@ export const EntrySignal = ({ onOpenBetModal }: { onOpenBetModal: () => void }) 
           {status}
         </span>
       </div>
+
+      {nextRoundCountdown !== null && nextRoundCountdown > 0 && (
+        <div className="mb-4 text-center bg-primary/10 rounded-lg p-3 border border-primary/30">
+          <p className="text-sm text-muted-foreground">Próxima análise em:</p>
+          <p className="text-2xl font-bold text-primary">{nextRoundCountdown}s</p>
+        </div>
+      )}
 
       <div className="grid grid-cols-3 gap-3 mb-4">
         <div className="bg-secondary rounded-lg p-3 border border-border">

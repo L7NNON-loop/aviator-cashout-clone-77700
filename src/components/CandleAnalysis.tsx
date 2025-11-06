@@ -45,7 +45,7 @@ export const CandleAnalysis = () => {
           let colorClass = '';
           
           if (value >= 1.00 && value <= 1.99) {
-            colorClass = 'text-purple-500 border-purple-500 bg-purple-500/10';
+            colorClass = 'text-blue-400 border-blue-400 bg-blue-400/10';
           } else if (value >= 2.00 && value <= 9.99) {
             colorClass = 'text-purple-600 border-purple-600 bg-purple-600/10';
           } else if (value >= 10.00) {
